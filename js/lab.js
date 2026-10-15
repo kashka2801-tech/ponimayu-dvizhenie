@@ -86,6 +86,9 @@
       const stage = document.createElement('section');
       stage.className = 'card lab-stage';
       stage.innerHTML = '<h3>Координатная ось и движение тела</h3>';
+      stage.tabIndex = -1;
+      stage.setAttribute('aria-label', 'Координатная ось и движение тела');
+      this.stage = stage;
       this.axisHost = document.createElement('div');
       stage.appendChild(this.axisHost);
 
@@ -319,6 +322,9 @@
       this.predSelects = selects;
       const btn = T.mkBtn('Запустить и проверить предположения', 'btn btn-primary');
       btn.addEventListener('click', function () {
+        // Показываем сцену сразу, до начала движения, в том числе при повторном нажатии.
+        self.stage.focus({ preventScroll: true });
+        self.stage.scrollIntoView({ behavior: 'instant', block: 'start' });
         if (self.playing) return;
         self.setTime(0);
         self.play();
